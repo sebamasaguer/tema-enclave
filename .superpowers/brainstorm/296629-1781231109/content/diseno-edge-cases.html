@@ -1,0 +1,54 @@
+<h2>Diseño — Casos borde y datos vacíos</h2>
+<p class="subtitle">Qué pasa cuando faltan datos o el admin no completó todo</p>
+
+<div class="section">
+  <h3>Reglas de renderizado</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:0.88em">
+    <thead>
+      <tr style="background:#1a1a2e;color:#e2e8f0">
+        <th style="padding:8px 12px;text-align:left">Situación</th>
+        <th style="padding:8px 12px;text-align:left">Comportamiento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #2d3748">
+        <td style="padding:8px 12px">No hay imagen de croquis cargada</td>
+        <td style="padding:8px 12px">La sección completa <strong>no se muestra</strong> — sin bloques vacíos</td>
+      </tr>
+      <tr style="border-bottom:1px solid #2d3748;background:#0f0f1a">
+        <td style="padding:8px 12px">Hay croquis pero sin hotspots</td>
+        <td style="padding:8px 12px">Se muestra el mapa solo, sin puntos (vista estática)</td>
+      </tr>
+      <tr style="border-bottom:1px solid #2d3748">
+        <td style="padding:8px 12px">Hotspot sin imagen cargada</td>
+        <td style="padding:8px 12px">El punto se muestra igual; el modal muestra un placeholder gris</td>
+      </tr>
+      <tr style="background:#0f0f1a">
+        <td style="padding:8px 12px">Hotspot sin nombre</td>
+        <td style="padding:8px 12px">Se omite ese hotspot del render (no aparece en el mapa)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h3>Interacción del modal</h3>
+  <ul style="line-height:2;font-size:0.9em">
+    <li>Clic en el punto → abre modal</li>
+    <li>Clic fuera del modal (overlay) → cierra</li>
+    <li>Botón ✕ → cierra</li>
+    <li>Tecla <kbd style="background:#2d3748;padding:2px 6px;border-radius:3px">Escape</kbd> → cierra</li>
+    <li>Solo un modal abierto a la vez</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>Responsive</h3>
+  <ul style="line-height:2;font-size:0.9em">
+    <li>Posiciones en % → los puntos se mueven con la imagen en cualquier pantalla</li>
+    <li>En mobile los puntos se reducen a 26px para no solaparse</li>
+    <li>El modal ocupa 90% del ancho en pantallas chicas</li>
+  </ul>
+</div>
+
+<p style="margin-top:20px;color:#68d391">¿Todo bien con estos casos? Confirmá y escribo el documento de especificación.</p>

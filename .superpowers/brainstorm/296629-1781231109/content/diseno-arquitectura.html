@@ -1,0 +1,86 @@
+<h2>Diseño — Arquitectura general</h2>
+<p class="subtitle">Cómo encaja la feature en el tema existente</p>
+
+<div class="section">
+  <h3>Archivos modificados / creados</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:0.9em">
+    <thead>
+      <tr style="background:#1a1a2e;color:#e2e8f0">
+        <th style="padding:8px 12px;text-align:left">Archivo</th>
+        <th style="padding:8px 12px;text-align:left">Qué se hace</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #2d3748">
+        <td style="padding:8px 12px"><code>inc/metaboxes.php</code></td>
+        <td style="padding:8px 12px">Se agrega el metabox "Croquis del barrio" al CPT <code>eu_project</code></td>
+      </tr>
+      <tr style="border-bottom:1px solid #2d3748;background:#0f0f1a">
+        <td style="padding:8px 12px"><code>single-eu_project.php</code></td>
+        <td style="padding:8px 12px">Se añade la sección del croquis con los puntos y el modal HTML</td>
+      </tr>
+      <tr style="border-bottom:1px solid #2d3748">
+        <td style="padding:8px 12px"><code>assets/css/main.css</code></td>
+        <td style="padding:8px 12px">Estilos del mapa, puntos y modal</td>
+      </tr>
+      <tr style="background:#0f0f1a">
+        <td style="padding:8px 12px"><code>assets/js/main.js</code></td>
+        <td style="padding:8px 12px">Lógica JS del modal (abrir, cerrar, keyboard)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h3>Flujo de datos</h3>
+  <div style="background:#0f0f1a;border-radius:8px;padding:16px;font-family:monospace;font-size:0.85em;line-height:2">
+    <span style="color:#68d391">Admin sube JPG del croquis</span> → guardado en post meta <code>eu_croquis_image</code><br>
+    <span style="color:#68d391">Admin agrega hotspots</span> (nombre + imagen + X% + Y%) → guardado en <code>eu_croquis_hotspots</code> (JSON serializado)<br>
+    <span style="color:#f6ad55">single-eu_project.php</span> lee los metas → renderiza imagen + círculos posicionados<br>
+    <span style="color:#63b3ed">Usuario hace clic en un punto</span> → JS abre modal con imagen y nombre<br>
+    <span style="color:#fc8181">Usuario cierra</span> → clic fuera, botón ✕ o tecla Escape
+  </div>
+</div>
+
+<div class="section">
+  <h3>Estructura del metabox en el admin</h3>
+  <div class="mockup">
+    <div class="mockup-header">Croquis del barrio — Panel de WordPress</div>
+    <div class="mockup-body" style="font-size:0.85em">
+      <div style="margin-bottom:12px">
+        <div class="label">Imagen del croquis</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+          <div class="placeholder" style="width:120px;height:80px;flex-shrink:0">JPG preview</div>
+          <button class="mock-button">Seleccionar imagen</button>
+        </div>
+      </div>
+      <hr style="border-color:#2d3748;margin:12px 0">
+      <div class="label">Hotspots (referencias)</div>
+      <div style="margin-top:8px;border:1px solid #2d3748;border-radius:6px;padding:10px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 60px 60px 80px 32px;gap:6px;align-items:center;font-size:0.8em">
+          <span style="color:#a0aec0">Nombre</span>
+          <span style="color:#a0aec0">Imagen</span>
+          <span style="color:#a0aec0">X %</span>
+          <span style="color:#a0aec0">Y %</span>
+          <span style="color:#a0aec0">Tipo</span>
+          <span></span>
+          <input class="mock-input" value="Lote 12">
+          <div class="placeholder" style="height:28px">img</div>
+          <input class="mock-input" value="43">
+          <input class="mock-input" value="67">
+          <select class="mock-input"><option>Lote</option></select>
+          <button class="mock-button" style="padding:2px 6px;background:#7f1d1d">✕</button>
+          <input class="mock-input" placeholder="Club House">
+          <div class="placeholder" style="height:28px">img</div>
+          <input class="mock-input" value="20">
+          <input class="mock-input" value="30">
+          <select class="mock-input"><option>Sector</option></select>
+          <button class="mock-button" style="padding:2px 6px;background:#7f1d1d">✕</button>
+        </div>
+        <button class="mock-button" style="margin-top:10px">+ Agregar referencia</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top:20px;color:#68d391">¿Este diseño de arquitectura te parece bien? Confirmá para ver la siguiente sección (visual del mapa y el modal).</p>

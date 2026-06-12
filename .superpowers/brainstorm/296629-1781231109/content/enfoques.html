@@ -1,0 +1,62 @@
+<h2>Tres enfoques para el croquis interactivo</h2>
+<p class="subtitle">Cada uno tiene distinto nivel de flexibilidad y complejidad</p>
+
+<div class="options">
+
+  <div class="option" data-choice="admin" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>✦ Puntos administrables desde el panel (Recomendado)</h3>
+      <p>Se agrega un metabox en la ficha del proyecto donde el administrador carga el JPG del croquis y define cada referencia: nombre, imagen y posición (X% / Y%). Los puntos aparecen como círculos numerados sobre el mapa. Al hacer clic se abre un modal con la imagen y el nombre.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Ventajas</h4><ul>
+          <li>Sin tocar código para actualizar lotes o fotos</li>
+          <li>Responsive por naturaleza (posiciones en %)</li>
+          <li>Encaja con los metaboxes existentes del tema</li>
+        </ul></div>
+        <div class="cons"><h4>Desventajas</h4><ul>
+          <li>Más código PHP (metabox repeater)</li>
+          <li>Los puntos son circulares, no formas exactas del lote</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="hardcoded" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Puntos hardcodeados en la plantilla</h3>
+      <p>El JPG del croquis se sube a la biblioteca de medios y las posiciones de los puntos se escriben directamente en <code>single-eu_project.php</code>. Más rápido de implementar, pero requiere editar código cada vez que cambia un lote.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Ventajas</h4><ul>
+          <li>Implementación más rápida</li>
+          <li>Sin metaboxes adicionales</li>
+        </ul></div>
+        <div class="cons"><h4>Desventajas</h4><ul>
+          <li>Cambiar un lote requiere editar el PHP</li>
+          <li>Solo sirve para un proyecto fijo</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="imagemap" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>HTML Image Map con áreas poligonales</h3>
+      <p>Usa la etiqueta nativa <code>&lt;map&gt;</code> con <code>&lt;area&gt;</code> para definir zonas clickeables con forma exacta (polígonos sobre el lote). Requiere calcular las coordenadas de cada vértice del lote en píxeles, y un JS extra para que escale en responsive.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Ventajas</h4><ul>
+          <li>Forma exacta del lote (no solo círculo)</li>
+          <li>Tecnología nativa del navegador</li>
+        </ul></div>
+        <div class="cons"><h4>Desventajas</h4><ul>
+          <li>Coordenadas en píxeles, difícil de mantener</li>
+          <li>Responsive complicado</li>
+          <li>No administrable desde el panel</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

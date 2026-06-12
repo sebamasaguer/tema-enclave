@@ -1,0 +1,26 @@
+<h2>¿De qué tipo es el croquis del barrio?</h2>
+<p class="subtitle">El formato del mapa determina cómo se agregan las zonas clickeables</p>
+
+<div class="options">
+  <div class="option" data-choice="svg" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Archivo SVG</h3>
+      <p>Vector editable — cada manzana o lote es un elemento independiente. Ideal para hacer zonas clickeables con precisión.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="imagen" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Imagen (PNG / JPG)</h3>
+      <p>Una foto o ilustración del barrio. Se agregan "puntos" o "áreas" clickeables encima de la imagen con coordenadas.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="ninguno" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Todavía no tengo el croquis</h3>
+      <p>Hay que crearlo desde cero — podemos diseñar un SVG simple del barrio directamente en el código.</p>
+    </div>
+  </div>
+</div>
