@@ -21,7 +21,9 @@
       if (preview.length) {
         preview.attr('src', attachment.url).show();
       } else {
-        target.closest('.eu-field-row, .eu-meta-field, td').append('<img class="eu-media-preview" src="' + attachment.url + '" alt="" />');
+        target.closest('.eu-field-row, .eu-meta-field, td').append(
+          $('<img>').attr({ class: 'eu-media-preview', src: attachment.url, alt: '' })
+        );
       }
     });
 
@@ -85,7 +87,10 @@
       )
     );
 
-    $('#eu-croquis-hotspots tbody').append(row);
+    var tbody = $('#eu-croquis-hotspots tbody');
+    if (tbody.length) {
+      tbody.append(row);
+    }
   });
 
   $(document).on('click', '.eu-croquis-remove-row', function () {
