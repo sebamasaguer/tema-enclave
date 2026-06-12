@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) {
 add_action('add_meta_boxes', 'eu_register_metaboxes');
 function eu_register_metaboxes() {
     add_meta_box('eu_project_data', __('Datos del proyecto', 'enclave-urbano'), 'eu_render_project_metabox', 'eu_project', 'normal', 'high');
+    add_meta_box('eu_croquis_data', __('Croquis del barrio', 'enclave-urbano'), 'eu_render_croquis_metabox', 'eu_project', 'normal', 'default');
     add_meta_box('eu_team_data', __('Datos del miembro', 'enclave-urbano'), 'eu_render_team_metabox', 'eu_team', 'normal', 'high');
     add_meta_box('eu_value_data', __('Icono del valor', 'enclave-urbano'), 'eu_render_value_metabox', 'eu_value', 'side', 'default');
     add_meta_box('eu_alliance_data', __('Datos de la alianza', 'enclave-urbano'), 'eu_render_alliance_metabox', 'eu_alliance', 'normal', 'default');
@@ -47,6 +48,73 @@ function eu_render_project_metabox($post) {
     }
     echo '</div>';
     echo '<p class="description">' . esc_html__('La imagen destacada funciona como portada del proyecto. El contenido principal del editor se muestra como descripción.', 'enclave-urbano') . '</p>';
+}
+
+function eu_render_croquis_metabox($post) {
+    wp_nonce_field('eu_save_croquis_data', 'eu_croquis_nonce');
+    $croquis_image = get_post_meta($post->ID, '_eu_croquis_image', true);
+    $hotspots_raw  = get_post_meta($post->ID, '_eu_croquis_hotspots', true);
+    $hotspots      = $hotspots_raw ? json_decode($hotspots_raw, true) : array();
+    if (!is_array($hotspots)) {
+        $hotspots = array();
+    }
+    ?>
+    <div class="eu-meta-field">
+        <label for="_eu_croquis_image"><?php esc_html_e('Imagen del croquis (JPG/PNG)', 'enclave-urbano'); ?></label>
+        <div class="eu-meta-input-wrap">
+            <input id="_eu_croquis_image" type="url" name="_eu_croquis_image" class="widefat eu-media-url" value="<?php echo esc_url($croquis_image); ?>">
+            <button type="button" class="button eu-media-button" data-target="#_eu_croquis_image"><?php esc_html_e('Seleccionar', 'enclave-urbano'); ?></button>
+            <button type="button" class="button eu-media-clear" data-target="#_eu_croquis_image"><?php esc_html_e('Quitar', 'enclave-urbano'); ?></button>
+        </div>
+        <?php if ($croquis_image) : ?>
+            <img class="eu-media-preview" src="<?php echo esc_url($croquis_image); ?>" alt="">
+        <?php endif; ?>
+    </div>
+
+    <hr style="margin:16px 0">
+
+    <h4 style="margin:0 0 4px"><?php esc_html_e('Referencias (hotspots)', 'enclave-urbano'); ?></h4>
+    <p class="description"><?php esc_html_e('X e Y son porcentajes de posición sobre el croquis (0–100). Los hotspots sin nombre no se muestran.', 'enclave-urbano'); ?></p>
+
+    <table class="widefat" id="eu-croquis-hotspots" style="margin-top:8px">
+        <thead>
+            <tr>
+                <th><?php esc_html_e('Nombre', 'enclave-urbano'); ?></th>
+                <th><?php esc_html_e('Imagen', 'enclave-urbano'); ?></th>
+                <th style="width:60px"><?php esc_html_e('X %', 'enclave-urbano'); ?></th>
+                <th style="width:60px"><?php esc_html_e('Y %', 'enclave-urbano'); ?></th>
+                <th style="width:90px"><?php esc_html_e('Tipo', 'enclave-urbano'); ?></th>
+                <th style="width:40px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($hotspots as $i => $hotspot) : ?>
+            <tr data-row="<?php echo esc_attr($i); ?>">
+                <td><input type="text" name="eu_croquis_hotspot[<?php echo esc_attr($i); ?>][name]" class="widefat" value="<?php echo esc_attr($hotspot['name']); ?>"></td>
+                <td>
+                    <input type="url" id="eu_croquis_img_<?php echo esc_attr($i); ?>" name="eu_croquis_hotspot[<?php echo esc_attr($i); ?>][image_url]" class="widefat eu-media-url" value="<?php echo esc_url(!empty($hotspot['image_url']) ? $hotspot['image_url'] : ''); ?>">
+                    <button type="button" class="button eu-media-button" data-target="#eu_croquis_img_<?php echo esc_attr($i); ?>"><?php esc_html_e('Sel.', 'enclave-urbano'); ?></button>
+                    <button type="button" class="button eu-media-clear" data-target="#eu_croquis_img_<?php echo esc_attr($i); ?>">×</button>
+                    <?php if (!empty($hotspot['image_url'])) : ?>
+                        <img class="eu-media-preview" src="<?php echo esc_url($hotspot['image_url']); ?>" alt="">
+                    <?php endif; ?>
+                </td>
+                <td><input type="number" name="eu_croquis_hotspot[<?php echo esc_attr($i); ?>][x]" class="small-text" min="0" max="100" value="<?php echo esc_attr($hotspot['x']); ?>"></td>
+                <td><input type="number" name="eu_croquis_hotspot[<?php echo esc_attr($i); ?>][y]" class="small-text" min="0" max="100" value="<?php echo esc_attr($hotspot['y']); ?>"></td>
+                <td>
+                    <select name="eu_croquis_hotspot[<?php echo esc_attr($i); ?>][type]">
+                        <option value="lote" <?php selected(!empty($hotspot['type']) ? $hotspot['type'] : 'lote', 'lote'); ?>><?php esc_html_e('Lote', 'enclave-urbano'); ?></option>
+                        <option value="sector" <?php selected(!empty($hotspot['type']) ? $hotspot['type'] : 'lote', 'sector'); ?>><?php esc_html_e('Sector', 'enclave-urbano'); ?></option>
+                    </select>
+                </td>
+                <td><button type="button" class="button eu-croquis-remove-row">&#x2715;</button></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <p><button type="button" class="button" id="eu-croquis-add-row"><?php esc_html_e('+ Agregar referencia', 'enclave-urbano'); ?></button></p>
+    <input type="hidden" id="eu-croquis-row-count" value="<?php echo esc_attr(count($hotspots)); ?>">
+    <?php
 }
 
 function eu_team_fields() {
@@ -179,6 +247,33 @@ function eu_save_metaboxes($post_id) {
         }
         foreach (eu_project_fields() as $key => $field) {
             eu_save_meta_value($post_id, '_eu_project_' . $key, $field['type']);
+        }
+
+        if (isset($_POST['eu_croquis_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['eu_croquis_nonce'])), 'eu_save_croquis_data')) {
+            $croquis_image = isset($_POST['_eu_croquis_image']) ? esc_url_raw(wp_unslash($_POST['_eu_croquis_image'])) : '';
+            if ($croquis_image) {
+                update_post_meta($post_id, '_eu_croquis_image', $croquis_image);
+            } else {
+                delete_post_meta($post_id, '_eu_croquis_image');
+            }
+
+            $hotspots = array();
+            if (isset($_POST['eu_croquis_hotspot']) && is_array($_POST['eu_croquis_hotspot'])) {
+                foreach ($_POST['eu_croquis_hotspot'] as $row) {
+                    $name = isset($row['name']) ? sanitize_text_field(wp_unslash($row['name'])) : '';
+                    if ('' === $name) {
+                        continue;
+                    }
+                    $hotspots[] = array(
+                        'name'      => $name,
+                        'image_url' => isset($row['image_url']) ? esc_url_raw(wp_unslash($row['image_url'])) : '',
+                        'x'         => isset($row['x']) ? max(0, min(100, (int) $row['x'])) : 50,
+                        'y'         => isset($row['y']) ? max(0, min(100, (int) $row['y'])) : 50,
+                        'type'      => (isset($row['type']) && in_array($row['type'], array('lote', 'sector'), true)) ? $row['type'] : 'lote',
+                    );
+                }
+            }
+            update_post_meta($post_id, '_eu_croquis_hotspots', wp_json_encode($hotspots));
         }
     }
 
