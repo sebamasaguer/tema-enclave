@@ -28,9 +28,11 @@ function eu_project_fields() {
         'delivery_date'  => array('label' => __('Fecha de entrega', 'enclave-urbano'), 'type' => 'text'),
         'stage'          => array('label' => __('Etapa actual', 'enclave-urbano'), 'type' => 'text'),
         'price_from'     => array('label' => __('Precio desde', 'enclave-urbano'), 'type' => 'text'),
-        'video_url'      => array('label' => __('Video URL (YouTube/Vimeo)', 'enclave-urbano'), 'type' => 'url'),
+        'video_url'      => array('label' => __('Video URL 1 (YouTube/Vimeo)', 'enclave-urbano'), 'type' => 'url'),
+        'video_url_2'    => array('label' => __('Video URL 2 (YouTube/Vimeo)', 'enclave-urbano'), 'type' => 'url'),
         'maps_embed_url' => array('label' => __('Google Maps Embed URL', 'enclave-urbano'), 'type' => 'url'),
         'whatsapp'       => array('label' => __('WhatsApp de contacto', 'enclave-urbano'), 'type' => 'text'),
+        'logo_url'       => array('label' => __('Logo del proyecto', 'enclave-urbano'), 'type' => 'url', 'media' => true, 'description' => __('Si se carga, reemplaza el título de texto en el hero del proyecto.', 'enclave-urbano')),
         'kml_url'        => array('label' => __('Archivo KML URL', 'enclave-urbano'), 'type' => 'url', 'media' => true, 'description' => __('Subir o pegar una URL pública de archivo .kml.', 'enclave-urbano')),
         'map_lat'        => array('label' => __('Latitud inicial del mapa', 'enclave-urbano'), 'type' => 'text'),
         'map_lng'        => array('label' => __('Longitud inicial del mapa', 'enclave-urbano'), 'type' => 'text'),
@@ -59,6 +61,11 @@ function eu_render_croquis_metabox($post) {
         $hotspots = array();
     }
     ?>
+    <div class="eu-meta-field">
+        <label for="_eu_croquis_title"><?php esc_html_e('Título del croquis', 'enclave-urbano'); ?></label>
+        <input id="_eu_croquis_title" type="text" name="_eu_croquis_title" class="widefat" value="<?php echo esc_attr(get_post_meta($post->ID, '_eu_croquis_title', true)); ?>" placeholder="<?php esc_attr_e('Croquis del barrio', 'enclave-urbano'); ?>">
+    </div>
+
     <div class="eu-meta-field">
         <label for="_eu_croquis_image"><?php esc_html_e('Imagen del croquis (JPG/PNG)', 'enclave-urbano'); ?></label>
         <div class="eu-meta-input-wrap">
@@ -104,6 +111,7 @@ function eu_render_croquis_metabox($post) {
                 <td>
                     <select name="eu_croquis_hotspot[<?php echo esc_attr($i); ?>][type]">
                         <option value="lote" <?php selected(!empty($hotspot['type']) ? $hotspot['type'] : 'lote', 'lote'); ?>><?php esc_html_e('Lote', 'enclave-urbano'); ?></option>
+                        <option value="area" <?php selected(!empty($hotspot['type']) ? $hotspot['type'] : 'lote', 'area'); ?>><?php esc_html_e('Área', 'enclave-urbano'); ?></option>
                         <option value="sector" <?php selected(!empty($hotspot['type']) ? $hotspot['type'] : 'lote', 'sector'); ?>><?php esc_html_e('Sector', 'enclave-urbano'); ?></option>
                     </select>
                 </td>
@@ -250,6 +258,9 @@ function eu_save_metaboxes($post_id) {
         }
 
         if (isset($_POST['eu_croquis_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['eu_croquis_nonce'])), 'eu_save_croquis_data')) {
+            $croquis_title = isset($_POST['_eu_croquis_title']) ? sanitize_text_field(wp_unslash($_POST['_eu_croquis_title'])) : '';
+            update_post_meta($post_id, '_eu_croquis_title', $croquis_title);
+
             $croquis_image = isset($_POST['_eu_croquis_image']) ? esc_url_raw(wp_unslash($_POST['_eu_croquis_image'])) : '';
             if ($croquis_image) {
                 update_post_meta($post_id, '_eu_croquis_image', $croquis_image);
@@ -269,7 +280,7 @@ function eu_save_metaboxes($post_id) {
                         'image_url' => isset($row['image_url']) ? esc_url_raw(wp_unslash($row['image_url'])) : '',
                         'x'         => isset($row['x']) ? max(0, min(100, (int) $row['x'])) : 50,
                         'y'         => isset($row['y']) ? max(0, min(100, (int) $row['y'])) : 50,
-                        'type'      => (isset($row['type']) && in_array($row['type'], array('lote', 'sector'), true)) ? $row['type'] : 'lote',
+                        'type'      => (isset($row['type']) && in_array($row['type'], array('lote', 'area', 'sector'), true)) ? $row['type'] : 'lote',
                     );
                 }
             }

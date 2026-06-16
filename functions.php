@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('EU_THEME_VERSION', '1.0.5');
+define('EU_THEME_VERSION', '1.0.6');
 define('EU_THEME_DIR', get_template_directory());
 define('EU_THEME_URI', get_template_directory_uri());
 

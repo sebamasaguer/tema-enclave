@@ -209,7 +209,7 @@ function eu_render_team_cards() {
             $qr       = get_post_meta(get_the_ID(), '_eu_team_qr_url', true);
             $link     = get_post_meta(get_the_ID(), '_eu_team_link_url', true);
             $photo    = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'eu-team') : '';
-            eu_render_team_card(get_the_title(), $position, $photo, $qr, $link);
+            eu_render_team_card(get_the_title(), $position, $photo, $qr, $link, get_the_ID());
         }
         wp_reset_postdata();
         return;
@@ -220,7 +220,7 @@ function eu_render_team_cards() {
     eu_render_team_card('Maria Eugenia Angulo', 'Arquitecta', '', '', '');
 }
 
-function eu_render_team_card($name, $position, $photo = '', $qr = '', $link = '') {
+function eu_render_team_card($name, $position, $photo = '', $qr = '', $link = '', $post_id = 0) {
     ?>
     <article class="eu-team-card">
         <div class="eu-team-photo <?php echo $photo ? '' : 'eu-team-photo--placeholder'; ?>">
@@ -239,11 +239,66 @@ function eu_render_team_card($name, $position, $photo = '', $qr = '', $link = ''
             <div>
                 <h3><?php echo esc_html($name); ?></h3>
                 <?php if ($position) : ?><p><?php echo esc_html($position); ?></p><?php endif; ?>
-                <?php if ($link) : ?><a href="<?php echo esc_url($link); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Ver perfil', 'enclave-urbano'); ?></a><?php endif; ?>
+                <?php if ($post_id) : ?>
+                    <a href="#perfil-<?php echo esc_attr($post_id); ?>"><?php esc_html_e('Ver perfil', 'enclave-urbano'); ?></a>
+                <?php elseif ($link) : ?>
+                    <a href="<?php echo esc_url($link); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Ver perfil', 'enclave-urbano'); ?></a>
+                <?php endif; ?>
             </div>
         </div>
     </article>
     <?php
+}
+
+function eu_render_team_profiles() {
+    $query = new WP_Query(array(
+        'post_type'      => 'eu_team',
+        'posts_per_page' => -1,
+        'orderby'        => array('menu_order' => 'ASC', 'date' => 'DESC'),
+        'order'          => 'ASC',
+    ));
+
+    if (!$query->have_posts()) {
+        return;
+    }
+
+    while ($query->have_posts()) {
+        $query->the_post();
+        $post_id  = get_the_ID();
+        $name     = get_the_title();
+        $position = get_post_meta($post_id, '_eu_team_position', true);
+        $email    = get_post_meta($post_id, '_eu_team_email', true);
+        $phone    = get_post_meta($post_id, '_eu_team_phone', true);
+        $link     = get_post_meta($post_id, '_eu_team_link_url', true);
+        $photo    = has_post_thumbnail() ? get_the_post_thumbnail_url($post_id, 'large') : '';
+        $content  = get_the_content();
+        ?>
+        <div id="perfil-<?php echo esc_attr($post_id); ?>" class="eu-profile">
+            <div class="eu-profile__photo-col">
+                <?php if ($photo) : ?>
+                    <img src="<?php echo esc_url($photo); ?>" alt="<?php echo esc_attr($name); ?>" class="eu-profile__photo">
+                <?php else : ?>
+                    <div class="eu-profile__photo-placeholder"><?php echo eu_inline_icon('compass'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+                <?php endif; ?>
+            </div>
+            <div class="eu-profile__info">
+                <h3 class="eu-profile__name"><?php echo esc_html($name); ?></h3>
+                <?php if ($position) : ?><p class="eu-profile__position"><?php echo esc_html($position); ?></p><?php endif; ?>
+                <?php if ($content) : ?>
+                    <div class="eu-profile__bio eu-page-editor-content"><?php echo wp_kses_post(apply_filters('the_content', $content)); ?></div>
+                <?php endif; ?>
+                <?php if ($email || $phone || $link) : ?>
+                    <ul class="eu-profile__contact">
+                        <?php if ($email) : ?><li><a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a></li><?php endif; ?>
+                        <?php if ($phone) : ?><li><?php echo esc_html($phone); ?></li><?php endif; ?>
+                        <?php if ($link) : ?><li><a href="<?php echo esc_url($link); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Sitio / Matrícula', 'enclave-urbano'); ?></a></li><?php endif; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php
+    }
+    wp_reset_postdata();
 }
 
 function eu_project_meta($post_id, $key) {

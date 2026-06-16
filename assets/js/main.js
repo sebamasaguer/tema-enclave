@@ -28,3 +28,43 @@
     });
   });
 }());
+
+// Croquis interactivo — modales
+(function () {
+  'use strict';
+
+  function openModal(id) {
+    var modal = document.getElementById(id);
+    if (!modal) return;
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    var close = modal.querySelector('.eu-modal__close');
+    if (close) close.focus();
+  }
+
+  function closeModal(modal) {
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.eu-croquis__dot').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      openModal(btn.dataset.modal);
+    });
+  });
+
+  document.querySelectorAll('.eu-modal').forEach(function (modal) {
+    modal.querySelector('.eu-modal__overlay').addEventListener('click', function () {
+      closeModal(modal);
+    });
+    modal.querySelector('.eu-modal__close').addEventListener('click', function () {
+      closeModal(modal);
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.eu-modal:not([hidden])').forEach(closeModal);
+    }
+  });
+}());

@@ -214,14 +214,14 @@ strong { font-weight: 700; }
 .eu-intro-grid {
   min-height: 190px;
   display: grid;
-  grid-template-columns: 150px 1fr minmax(360px, 460px);
+  grid-template-columns: 150px 1fr;
   gap: clamp(1.5rem, 4vw, 3rem);
   align-items: center;
   padding-block: 1.6rem;
 }
 .eu-intro-logo { width: 150px; height: 150px; background: var(--eu-green); display: grid; place-items: center; }
 .eu-intro-logo__img { width: 86%; height: 86%; object-fit: contain; }
-.eu-intro-text { font-size: .98rem; line-height: 1.32; }
+.eu-intro-text { font-size: 1.45rem; line-height: 1.4; text-align: center; font-weight: 400; }
 .eu-intro-text p { margin: 0; }
 .eu-intro-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
 .eu-intro-card { min-height: 150px; padding: 1.1rem; color: #fff; border-radius: 0 0 24px 0; }
@@ -346,6 +346,18 @@ strong { font-weight: 700; }
 .eu-team-qr { width: 54px; height: 54px; object-fit: contain; background: #fff; flex: 0 0 auto; }
 .eu-team-qr--empty { background: rgba(255,255,255,.12); }
 .eu-team-closing { text-align: right; color: var(--eu-green); text-transform: uppercase; font-size: 1.4rem; margin: 1.4rem 0 0; font-weight: 500; }
+/* Perfiles expandidos */
+.eu-section-profiles { border-top: 1px solid #e0e0e0; }
+.eu-profiles { display: flex; flex-direction: column; gap: 5rem; }
+.eu-profile { display: grid; grid-template-columns: 280px 1fr; gap: 3.5rem; align-items: start; }
+.eu-profile__photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+.eu-profile__photo-placeholder { width: 100%; aspect-ratio: 3/4; background: #666; display: grid; place-items: center; color: #fff; }
+.eu-profile__photo-placeholder svg { width: 80px; height: 80px; opacity: .6; }
+.eu-profile__name { font-family: Georgia, "Times New Roman", serif; font-size: 2rem; margin: 0 0 .3rem; }
+.eu-profile__position { color: var(--eu-green); font-size: 1rem; margin: 0 0 1.4rem; font-weight: 500; }
+.eu-profile__bio { font-size: .95rem; line-height: 1.85; margin-bottom: 1.4rem; }
+.eu-profile__contact { list-style: none; padding: 0; margin: 0; font-size: .9rem; display: flex; flex-wrap: wrap; gap: .5rem 2rem; }
+.eu-profile__contact a { color: var(--eu-green); }
 
 /* Contact form */
 .eu-section-home-contact { background: #f8faf7; }
@@ -488,6 +500,12 @@ strong { font-weight: 700; }
 .eu-project-card:hover .eu-project-card__image img { transform: scale(1.04); }
 .eu-project-card__body { padding: 1.5rem; }
 .eu-project-card__body h2 { font-size: 1.8rem; }
+
+/* Primer proyecto: ocupa todo el ancho y se divide en imagen + contenido */
+.eu-project-card--featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
+.eu-project-card--featured .eu-project-card__image { aspect-ratio: unset; min-height: 340px; }
+.eu-project-card--featured .eu-project-card__body { display: flex; flex-direction: column; justify-content: center; padding: 2.5rem; }
+.eu-project-card--featured .eu-project-card__body h2 { font-size: 2.2rem; }
 .eu-project-card__facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; margin: 1rem 0; }
 .eu-project-card__facts div { border-top: 1px solid rgba(0,0,0,.08); padding-top: .5rem; }
 .eu-project-card__facts dt { color: var(--eu-green); font-size: .72rem; text-transform: uppercase; font-weight: 800; letter-spacing: .05em; }
@@ -505,6 +523,7 @@ strong { font-weight: 700; }
 .eu-project-hero__content { position: relative; padding-block: 4rem; }
 .eu-project-hero h1 { color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 6vw, 4rem); }
 .eu-project-hero .eu-kicker { color: #fff; }
+.eu-project-hero__logo { display: block; max-height: 70px; max-width: 200px; width: auto; object-fit: contain; }
 .eu-project-layout { display: grid; grid-template-columns: 1fr 290px; gap: 2.4rem; padding-block: 3rem; align-items: start; }
 .eu-project-maincol { display: grid; gap: 2rem; }
 .eu-project-block { background: #fff; }
@@ -512,6 +531,8 @@ strong { font-weight: 700; }
 .eu-video-embed,
 .eu-map-embed,
 .eu-kml-map { width: 100%; background: #f1f1f1; border: 1px solid rgba(0,0,0,.08); }
+.eu-video-embed { margin-bottom: 1.5rem; }
+.eu-video-embed:last-child { margin-bottom: 0; }
 .eu-video-embed iframe { width: 100%; aspect-ratio: 16/9; height: auto; display: block; }
 .eu-map-embed iframe { width: 100%; min-height: 320px; display: block; border: 0; }
 .eu-kml-map { min-height: 420px; }
@@ -555,7 +576,6 @@ strong { font-weight: 700; }
 
 @media (max-width: 1120px) {
   .eu-intro-grid { grid-template-columns: 130px 1fr; }
-  .eu-intro-cards { grid-column: 1 / -1; }
   .eu-team-layout { grid-template-columns: 250px 1fr; }
   .eu-team-symbol { display: none; }
   .eu-team-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -605,6 +625,8 @@ strong { font-weight: 700; }
   .eu-project-grid,
   .eu-card-grid,
   .eu-sales-fallback { grid-template-columns: 1fr; }
+  .eu-project-card--featured { grid-template-columns: 1fr; }
+  .eu-project-card--featured .eu-project-card__image { min-height: 220px; }
   .eu-intro-logo { width: 120px; height: 120px; }
   .eu-team-cards { grid-template-columns: 1fr; }
   .eu-contact-info-card { padding-left: 0; }
@@ -626,7 +648,6 @@ strong { font-weight: 700; }
   .eu-brand-strip__inner { gap: .8rem; }
   .eu-strip-logo { width: 190px; }
   .eu-brand-strip p { font-size: .86rem; }
-  .eu-intro-cards { grid-template-columns: 1fr; }
   .eu-value-card {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -648,6 +669,89 @@ strong { font-weight: 700; }
   .eu-alliance-grid { grid-template-columns: 1fr; }
   .eu-project-card__facts { grid-template-columns: 1fr; }
 }
+
+/* =========================================================
+   Croquis interactivo
+========================================================= */
+.eu-croquis__map {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  line-height: 0;
+}
+.eu-croquis__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+.eu-croquis__dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: .78rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .18s ease, box-shadow .18s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+.eu-croquis__dot:hover { transform: translate(-50%, -50%) scale(1.18); box-shadow: 0 4px 14px rgba(0,0,0,.45); }
+.eu-croquis__dot--lote { width: 28px; height: 28px; background: var(--eu-green); color: #fff; }
+.eu-croquis__dot--area { width: 28px; height: 28px; background: var(--eu-yellow); color: #222; }
+.eu-croquis__dot--sector { width: 32px; height: 32px; background: var(--eu-yellow); color: #222; font-size: 1rem; }
+
+.eu-croquis__legend { display: flex; gap: 1.2rem; margin-top: .9rem; }
+.eu-croquis__legend-item { display: flex; align-items: center; gap: .45rem; font-size: .82rem; font-weight: 600; }
+.eu-croquis__legend-item::before { content: ''; display: inline-block; width: 14px; height: 14px; border-radius: 50%; }
+.eu-croquis__legend-item--lote::before { background: var(--eu-green); }
+.eu-croquis__legend-item--area::before { background: var(--eu-yellow); }
+.eu-croquis__legend-item--sector::before { background: var(--eu-yellow); }
+
+/* Modales */
+.eu-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.eu-modal[hidden] { display: none; }
+.eu-modal__overlay { position: absolute; inset: 0; background: rgba(0,0,0,.55); cursor: pointer; }
+.eu-modal__box {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  max-width: 680px;
+  width: calc(100% - 2rem);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0,0,0,.28);
+  animation: eu-modal-in .2s ease;
+}
+@keyframes eu-modal-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.eu-modal__close {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  background: rgba(0,0,0,.08);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.eu-modal__close:hover { background: rgba(0,0,0,.18); }
+.eu-modal__img { width: 100%; max-height: 460px; object-fit: cover; border-radius: 12px 12px 0 0; display: block; }
+.eu-modal__img-placeholder { width: 100%; height: 220px; background: var(--eu-green-12); border-radius: 12px 12px 0 0; }
+.eu-modal__body { padding: 1.25rem 1.5rem 1.5rem; }
+.eu-modal__title { font-size: 1.25rem; margin: 0 0 .5rem; }
+.eu-modal__badge { display: inline-block; font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; padding: .25rem .65rem; border-radius: 99px; }
+.eu-modal__badge--lote { background: var(--eu-green); color: #fff; }
+.eu-modal__badge--sector { background: var(--eu-yellow); color: #222; }
 
 /* =========================================================
    Header home - ajuste visual logo superpuesto

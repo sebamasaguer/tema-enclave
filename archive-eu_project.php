@@ -17,8 +17,8 @@ get_header();
 
         <?php if (have_posts()) : ?>
             <div class="eu-project-grid">
-                <?php while (have_posts()) : the_post(); ?>
-                    <article <?php post_class('eu-project-card'); ?>>
+                <?php $eu_project_index = 0; while (have_posts()) : the_post(); $eu_project_index++; ?>
+                    <article <?php post_class($eu_project_index === 1 ? 'eu-project-card eu-project-card--featured' : 'eu-project-card'); ?>>
                         <a href="<?php the_permalink(); ?>" class="eu-project-card__image">
                             <?php if (has_post_thumbnail()) : ?>
                                 <?php the_post_thumbnail('eu-card'); ?>

@@ -68,6 +68,12 @@ get_header();
     </div>
 </section>
 
+<section class="eu-section eu-section-profiles">
+    <div class="eu-container eu-profiles">
+        <?php eu_render_team_profiles(); ?>
+    </div>
+</section>
+
 </main>
 
 <?php get_footer(); ?>

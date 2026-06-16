@@ -18,16 +18,6 @@ get_header();
                 <?php echo wpautop(eu_kses_content(eu_get_option('home_mission'))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             </div>
 
-            <div class="eu-intro-cards">
-                <article class="eu-intro-card eu-intro-card--light">
-                    <h2><?php echo esc_html(eu_get_option('home_genera_title')); ?></h2>
-                    <p><?php echo esc_html(eu_get_option('home_genera_text')); ?></p>
-                </article>
-                <article class="eu-intro-card eu-intro-card--dark">
-                    <h2><?php echo esc_html(eu_get_option('home_alcance_title')); ?></h2>
-                    <p><?php echo esc_html(eu_get_option('home_alcance_text')); ?></p>
-                </article>
-            </div>
 			
         </div>
     </section>

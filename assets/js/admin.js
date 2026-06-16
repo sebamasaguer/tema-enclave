@@ -78,6 +78,7 @@
 
     var select = $('<select>').attr('name', 'eu_croquis_hotspot[' + i + '][type]');
     select.append($('<option>').val('lote').text('Lote'));
+    select.append($('<option>').val('area').text('Área'));
     select.append($('<option>').val('sector').text('Sector'));
     row.append($('<td>').append(select));
 
