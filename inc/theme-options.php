@@ -142,7 +142,7 @@ function eu_render_theme_options_page() {
             <div class="eu-admin-card">
                 <h2><?php esc_html_e('Home: Enclave Urbano', 'enclave-urbano'); ?></h2>
                 <?php
-                eu_option_textarea_field('home_mission', __('Texto misión', 'enclave-urbano'), $options['home_mission']);
+                eu_option_editor_field('home_mission', __('Texto misión', 'enclave-urbano'), $options['home_mission']);
                 eu_option_text_field('home_genera_title', __('Título bloque Genera', 'enclave-urbano'), $options['home_genera_title']);
                 eu_option_textarea_field('home_genera_text', __('Texto bloque Genera', 'enclave-urbano'), $options['home_genera_text']);
                 eu_option_text_field('home_alcance_title', __('Título bloque Alcance', 'enclave-urbano'), $options['home_alcance_title']);
@@ -210,6 +210,28 @@ function eu_option_textarea_field($key, $label, $value) {
     <div class="eu-field-row">
         <label for="eu-option-<?php echo esc_attr($key); ?>"><?php echo esc_html($label); ?></label>
         <textarea id="eu-option-<?php echo esc_attr($key); ?>" name="eu_theme_options[<?php echo esc_attr($key); ?>]" rows="5" class="large-text"><?php echo esc_textarea($value); ?></textarea>
+    </div>
+    <?php
+}
+
+function eu_option_editor_field($key, $label, $value) {
+    $editor_id = 'eu_option_' . $key;
+    ?>
+    <div class="eu-field-row eu-editor-row">
+        <label><?php echo esc_html($label); ?></label>
+        <?php
+        wp_editor($value, $editor_id, array(
+            'textarea_name' => 'eu_theme_options[' . $key . ']',
+            'textarea_rows' => 8,
+            'media_buttons' => false,
+            'teeny'         => false,
+            'tinymce'       => array(
+                'toolbar1' => 'bold,italic,underline,strikethrough,|,bullist,numlist,|,link,unlink,|,removeformat',
+                'toolbar2' => '',
+            ),
+            'quicktags'     => array('buttons' => 'strong,em,ul,ol,li,link'),
+        ));
+        ?>
     </div>
     <?php
 }
