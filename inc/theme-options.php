@@ -124,7 +124,7 @@ function eu_render_theme_options_page() {
                 eu_option_text_field('phone_admin', __('Teléfono administración', 'enclave-urbano'), $options['phone_admin']);
                 eu_option_text_field('phone_sales', __('Teléfono comercialización', 'enclave-urbano'), $options['phone_sales']);
                 eu_option_text_field('whatsapp', __('WhatsApp global', 'enclave-urbano'), $options['whatsapp']);
-                eu_option_textarea_field('address', __('Dirección / texto de ubicación', 'enclave-urbano'), $options['address']);
+                eu_option_editor_field('address', __('Dirección / texto de ubicación', 'enclave-urbano'), $options['address']);
                 ?>
             </div>
 
@@ -144,9 +144,9 @@ function eu_render_theme_options_page() {
                 <?php
                 eu_option_editor_field('home_mission', __('Texto misión', 'enclave-urbano'), $options['home_mission']);
                 eu_option_text_field('home_genera_title', __('Título bloque Genera', 'enclave-urbano'), $options['home_genera_title']);
-                eu_option_textarea_field('home_genera_text', __('Texto bloque Genera', 'enclave-urbano'), $options['home_genera_text']);
+                eu_option_editor_field('home_genera_text', __('Texto bloque Genera', 'enclave-urbano'), $options['home_genera_text']);
                 eu_option_text_field('home_alcance_title', __('Título bloque Alcance', 'enclave-urbano'), $options['home_alcance_title']);
-                eu_option_textarea_field('home_alcance_text', __('Texto bloque Alcance', 'enclave-urbano'), $options['home_alcance_text']);
+                eu_option_editor_field('home_alcance_text', __('Texto bloque Alcance', 'enclave-urbano'), $options['home_alcance_text']);
                 ?>
             </div>
 
@@ -154,8 +154,8 @@ function eu_render_theme_options_page() {
                 <h2><?php esc_html_e('Home: Equipo', 'enclave-urbano'); ?></h2>
                 <?php
                 eu_option_text_field('team_intro_title', __('Título lateral', 'enclave-urbano'), $options['team_intro_title']);
-                eu_option_textarea_field('team_intro_text', __('Texto lateral', 'enclave-urbano'), $options['team_intro_text']);
-                eu_option_textarea_field('team_note', __('Caja inferior de equipo', 'enclave-urbano'), $options['team_note']);
+                eu_option_editor_field('team_intro_text', __('Texto lateral', 'enclave-urbano'), $options['team_intro_text']);
+                eu_option_editor_field('team_note', __('Caja inferior de equipo', 'enclave-urbano'), $options['team_note']);
                 ?>
             </div>
 
@@ -201,15 +201,6 @@ function eu_option_text_field($key, $label, $value, $type = 'text', $placeholder
     <div class="eu-field-row">
         <label for="eu-option-<?php echo esc_attr($key); ?>"><?php echo esc_html($label); ?></label>
         <input id="eu-option-<?php echo esc_attr($key); ?>" type="<?php echo esc_attr($type); ?>" name="eu_theme_options[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>" class="regular-text" />
-    </div>
-    <?php
-}
-
-function eu_option_textarea_field($key, $label, $value) {
-    ?>
-    <div class="eu-field-row">
-        <label for="eu-option-<?php echo esc_attr($key); ?>"><?php echo esc_html($label); ?></label>
-        <textarea id="eu-option-<?php echo esc_attr($key); ?>" name="eu_theme_options[<?php echo esc_attr($key); ?>]" rows="5" class="large-text"><?php echo esc_textarea($value); ?></textarea>
     </div>
     <?php
 }
