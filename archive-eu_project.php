@@ -10,10 +10,17 @@ get_header();
 <main id="main" class="eu-main eu-page-main eu-projects-archive">
     <div class="eu-container">
         <header class="eu-page-header">
-            <p class="eu-kicker"><?php esc_html_e('Desarrollo urbano', 'enclave-urbano'); ?></p>
-            <h1><?php esc_html_e('Proyectos', 'enclave-urbano'); ?></h1>
-            <p class="eu-lead"><?php echo esc_html(eu_get_option('tagline')); ?></p>
+            <?php if (eu_get_option('projects_kicker')) : ?>
+                <p class="eu-kicker"><?php echo esc_html(eu_get_option('projects_kicker')); ?></p>
+            <?php endif; ?>
+            <h1><?php echo esc_html(eu_get_option('projects_title') ?: __('Proyectos', 'enclave-urbano')); ?></h1>
         </header>
+
+        <?php $projects_intro = eu_get_option('projects_intro'); if ($projects_intro) : ?>
+            <div class="eu-projects-intro eu-page-editor-content">
+                <?php echo wp_kses_post(wpautop($projects_intro)); ?>
+            </div>
+        <?php endif; ?>
 
         <?php if (have_posts()) : ?>
             <div class="eu-project-grid">

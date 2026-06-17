@@ -409,6 +409,8 @@ strong { font-weight: 700; }
 .eu-page-shell { position: relative; }
 .eu-page-header { margin-bottom: clamp(2rem, 5vw, 4rem); }
 .eu-page-header--compact { margin-bottom: 2rem; }
+.eu-projects-intro { margin-bottom: clamp(2rem, 5vw, 4rem); max-width: 860px; }
+.eu-projects-intro img { max-width: 100%; height: auto; display: block; margin: 1.5rem 0; }
 .eu-page-editor-content { font-size: 1rem; }
 .eu-page-editor-content > * { max-width: 880px; }
 .eu-page-editor-content img { height: auto; }

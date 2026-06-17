@@ -79,6 +79,7 @@ function eu_sanitize_theme_options($input) {
             case 'team_intro_text':
             case 'team_note':
             case 'address':
+            case 'projects_intro':
                 $output[$key] = wp_kses_post($value);
                 break;
             default:
@@ -160,6 +161,15 @@ function eu_render_theme_options_page() {
             </div>
 
             <div class="eu-admin-card">
+                <h2><?php esc_html_e('Página de Proyectos', 'enclave-urbano'); ?></h2>
+                <?php
+                eu_option_text_field('projects_kicker', __('Kicker (texto pequeño sobre el título)', 'enclave-urbano'), $options['projects_kicker']);
+                eu_option_text_field('projects_title', __('Título de la página', 'enclave-urbano'), $options['projects_title']);
+                eu_option_editor_field_with_media('projects_intro', __('Texto e imágenes de introducción', 'enclave-urbano'), $options['projects_intro']);
+                ?>
+            </div>
+
+            <div class="eu-admin-card">
                 <h2><?php esc_html_e('Proyectos y Google Maps', 'enclave-urbano'); ?></h2>
                 <?php eu_option_text_field('google_maps_api_key', __('Google Maps API Key', 'enclave-urbano'), $options['google_maps_api_key']); ?>
                 <p class="description"><?php esc_html_e('Necesaria para visualizar archivos KML dentro de las páginas de proyecto. El archivo KML debe estar disponible en una URL pública.', 'enclave-urbano'); ?></p>
@@ -221,6 +231,28 @@ function eu_option_editor_field($key, $label, $value) {
                 'toolbar2' => '',
             ),
             'quicktags'     => array('buttons' => 'strong,em,ul,ol,li,link'),
+        ));
+        ?>
+    </div>
+    <?php
+}
+
+function eu_option_editor_field_with_media($key, $label, $value) {
+    $editor_id = 'eu_option_' . $key;
+    ?>
+    <div class="eu-field-row eu-editor-row">
+        <label><?php echo esc_html($label); ?></label>
+        <?php
+        wp_editor($value, $editor_id, array(
+            'textarea_name' => 'eu_theme_options[' . $key . ']',
+            'textarea_rows' => 12,
+            'media_buttons' => true,
+            'teeny'         => false,
+            'tinymce'       => array(
+                'toolbar1' => 'bold,italic,underline,strikethrough,|,bullist,numlist,|,link,unlink,|,image,|,removeformat',
+                'toolbar2' => '',
+            ),
+            'quicktags'     => array('buttons' => 'strong,em,ul,ol,li,link,img'),
         ));
         ?>
     </div>
