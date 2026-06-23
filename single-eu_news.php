@@ -52,6 +52,26 @@
 
         </div>
 
+        <?php
+        $prev_post = get_previous_post();
+        $next_post = get_next_post();
+        if ( $prev_post || $next_post ) :
+        ?>
+        <nav class="eu-news-nav">
+            <?php if ( $prev_post ) : ?>
+                <a class="eu-news-nav__arrow" href="<?php echo esc_url( get_permalink( $prev_post ) ); ?>">&#8592;</a>
+            <?php else : ?>
+                <span class="eu-news-nav__spacer"></span>
+            <?php endif; ?>
+
+            <?php if ( $next_post ) : ?>
+                <a class="eu-news-nav__arrow" href="<?php echo esc_url( get_permalink( $next_post ) ); ?>">&#8594;</a>
+            <?php else : ?>
+                <span class="eu-news-nav__spacer"></span>
+            <?php endif; ?>
+        </nav>
+        <?php endif; ?>
+
     </div>
 
 </section>

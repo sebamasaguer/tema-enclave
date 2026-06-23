@@ -51,13 +51,12 @@ get_header();
                 <?php esc_html_e('Cada proyecto, cliente y sitio es único.', 'enclave-urbano'); ?>
             </p>
 
-            <h2>
-                <?php esc_html_e('Arquitectos', 'enclave-urbano'); ?>
-            </h2>
-
-            <div class="eu-team-cards">
-                <?php eu_render_team_cards(); ?>
-            </div>
+            <?php
+            $page_content = get_the_content();
+            if ( $page_content ) :
+                echo wp_kses_post( apply_filters( 'the_content', $page_content ) );
+            endif;
+            ?>
 
             <p class="eu-team-closing">
                 <?php esc_html_e('Diseña, crea y construye.', 'enclave-urbano'); ?>
@@ -70,6 +69,14 @@ get_header();
 
 <section class="eu-section eu-section-profiles">
     <div class="eu-container eu-profiles">
+
+        <div class="eu-team-cards-section">
+            <h2><?php esc_html_e('Arquitectos', 'enclave-urbano'); ?></h2>
+            <div class="eu-team-cards">
+                <?php eu_render_team_cards(); ?>
+            </div>
+        </div>
+
         <?php eu_render_team_profiles(); ?>
     </div>
 </section>
