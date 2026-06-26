@@ -227,8 +227,9 @@ function eu_option_editor_field($key, $label, $value) {
             'media_buttons' => false,
             'teeny'         => false,
             'tinymce'       => array(
-                'toolbar1' => 'bold,italic,underline,strikethrough,|,bullist,numlist,|,link,unlink,|,removeformat',
+                'toolbar1' => 'formatselect,|,bold,italic,underline,strikethrough,|,bullist,numlist,|,link,unlink,|,removeformat',
                 'toolbar2' => '',
+                'block_formats' => 'Párrafo=p;Título 2=h2;Título 3=h3',
             ),
             'quicktags'     => array('buttons' => 'strong,em,ul,ol,li,link'),
         ));

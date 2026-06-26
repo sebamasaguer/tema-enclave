@@ -1,50 +1,44 @@
 <?php
 /**
- * Projects archive.
+ * Template Name: Inversiones
  *
  * @package Enclave_Urbano
  */
 
 get_header();
+
+$inversiones = new WP_Query(array(
+    'post_type'      => 'eu_project',
+    'posts_per_page' => -1,
+    'orderby'        => array('menu_order' => 'ASC', 'date' => 'DESC'),
+    'meta_query'     => array(
+        array(
+            'key'   => '_eu_project_category',
+            'value' => 'inversion',
+        ),
+    ),
+));
 ?>
-<main id="main" class="eu-main eu-page-main eu-projects-archive">
+<main id="main" class="eu-main eu-page-main eu-projects-archive eu-inversiones-page">
     <div class="eu-container">
         <header class="eu-page-header">
-            <?php if (eu_get_option('projects_kicker')) : ?>
-                <p class="eu-kicker"><?php echo esc_html(eu_get_option('projects_kicker')); ?></p>
-            <?php endif; ?>
-            <h1><?php echo esc_html(eu_get_option('projects_title') ?: __('Proyectos', 'enclave-urbano')); ?></h1>
+            <p class="eu-kicker"><?php esc_html_e('Oportunidades', 'enclave-urbano'); ?></p>
+            <h1><?php esc_html_e('Inversiones', 'enclave-urbano'); ?></h1>
         </header>
 
-        <?php $projects_intro = eu_get_option('projects_intro'); if ($projects_intro) : ?>
-            <div class="eu-projects-intro eu-page-editor-content">
-                <?php echo wp_kses_post(wpautop($projects_intro)); ?>
-            </div>
-        <?php endif; ?>
+        <?php if (have_posts()) : while (have_posts()) : the_post();
+            $page_content = get_the_content();
+            if ($page_content) : ?>
+                <div class="eu-projects-intro eu-page-editor-content">
+                    <?php the_content(); ?>
+                </div>
+            <?php endif;
+        endwhile; endif; wp_reset_query(); ?>
 
-        <?php
-        $desarrollos = new WP_Query(array(
-            'post_type'      => 'eu_project',
-            'posts_per_page' => -1,
-            'orderby'        => array('menu_order' => 'ASC', 'date' => 'DESC'),
-            'meta_query'     => array(
-                'relation' => 'OR',
-                array(
-                    'key'     => '_eu_project_category',
-                    'value'   => 'inversion',
-                    'compare' => '!=',
-                ),
-                array(
-                    'key'     => '_eu_project_category',
-                    'compare' => 'NOT EXISTS',
-                ),
-            ),
-        ));
-        ?>
-        <?php if ($desarrollos->have_posts()) : ?>
+        <?php if ($inversiones->have_posts()) : ?>
             <div class="eu-project-grid">
-                <?php $eu_project_index = 0; while ($desarrollos->have_posts()) : $desarrollos->the_post(); $eu_project_index++; ?>
-                    <article <?php post_class($eu_project_index === 1 ? 'eu-project-card eu-project-card--featured' : 'eu-project-card'); ?>>
+                <?php while ($inversiones->have_posts()) : $inversiones->the_post(); ?>
+                    <article class="eu-project-card">
                         <a href="<?php the_permalink(); ?>" class="eu-project-card__image">
                             <?php if (has_post_thumbnail()) : ?>
                                 <?php the_post_thumbnail('eu-card'); ?>
@@ -67,7 +61,7 @@ get_header();
                 <?php endwhile; wp_reset_postdata(); ?>
             </div>
         <?php else : ?>
-            <p><?php esc_html_e('Todavía no hay proyectos cargados.', 'enclave-urbano'); ?></p>
+            <p><?php esc_html_e('Todavía no hay proyectos de inversión cargados.', 'enclave-urbano'); ?></p>
         <?php endif; ?>
     </div>
 </main>

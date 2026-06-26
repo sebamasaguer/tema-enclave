@@ -34,6 +34,7 @@ function eu_project_fields() {
         'whatsapp'       => array('label' => __('WhatsApp de contacto', 'enclave-urbano'), 'type' => 'text'),
         'logo_url'       => array('label' => __('Logo del proyecto', 'enclave-urbano'), 'type' => 'url', 'media' => true, 'description' => __('Si se carga, reemplaza el título de texto en el hero del proyecto.', 'enclave-urbano')),
         'kml_url'        => array('label' => __('Archivo KML URL', 'enclave-urbano'), 'type' => 'url', 'media' => true, 'description' => __('Subir o pegar una URL pública de archivo .kml.', 'enclave-urbano')),
+        'brochure_url'   => array('label' => __('Brochure (PDF)', 'enclave-urbano'), 'type' => 'url', 'media' => true, 'description' => __('Subir un PDF para mostrar el botón de descarga en la ficha técnica.', 'enclave-urbano')),
         'map_lat'        => array('label' => __('Latitud inicial del mapa', 'enclave-urbano'), 'type' => 'text'),
         'map_lng'        => array('label' => __('Longitud inicial del mapa', 'enclave-urbano'), 'type' => 'text'),
         'map_zoom'       => array('label' => __('Zoom inicial', 'enclave-urbano'), 'type' => 'number'),
@@ -42,6 +43,18 @@ function eu_project_fields() {
 
 function eu_render_project_metabox($post) {
     wp_nonce_field('eu_save_project_data', 'eu_project_nonce');
+
+    $category = get_post_meta($post->ID, '_eu_project_category', true) ?: 'desarrollo';
+    ?>
+    <div class="eu-meta-field">
+        <label for="_eu_project_category"><strong><?php esc_html_e('Tipo de proyecto', 'enclave-urbano'); ?></strong></label>
+        <select id="_eu_project_category" name="_eu_project_category">
+            <option value="desarrollo" <?php selected($category, 'desarrollo'); ?>><?php esc_html_e('Desarrollo (aparece en /proyectos/)', 'enclave-urbano'); ?></option>
+            <option value="inversion" <?php selected($category, 'inversion'); ?>><?php esc_html_e('Inversión (aparece en /inversiones/)', 'enclave-urbano'); ?></option>
+        </select>
+    </div>
+    <?php
+
     echo '<div class="eu-metabox-grid">';
     foreach (eu_project_fields() as $key => $field) {
         $meta_key = '_eu_project_' . $key;
@@ -256,6 +269,9 @@ function eu_save_metaboxes($post_id) {
         foreach (eu_project_fields() as $key => $field) {
             eu_save_meta_value($post_id, '_eu_project_' . $key, $field['type']);
         }
+
+        $category = (isset($_POST['_eu_project_category']) && 'inversion' === $_POST['_eu_project_category']) ? 'inversion' : 'desarrollo';
+        update_post_meta($post_id, '_eu_project_category', $category);
 
         if (isset($_POST['eu_croquis_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['eu_croquis_nonce'])), 'eu_save_croquis_data')) {
             $croquis_title = isset($_POST['_eu_croquis_title']) ? sanitize_text_field(wp_unslash($_POST['_eu_croquis_title'])) : '';

@@ -32,6 +32,7 @@ get_header();
             return !empty($h['name']);
         }));
         $project_logo = eu_project_meta(get_the_ID(), 'logo_url');
+        $brochure     = eu_project_meta(get_the_ID(), 'brochure_url');
         ?>
         <header class="eu-project-hero" style="background-image:url('<?php echo esc_url($hero); ?>')">
             <div class="eu-project-hero__overlay"></div>
@@ -116,7 +117,7 @@ get_header();
 
                 <?php if ($kml || ($lat && $lng)) : ?>
                     <section class="eu-project-block">
-                        <h2><?php esc_html_e('Urbanización', 'enclave-urbano'); ?></h2>
+                        <h2><?php esc_html_e('Urbanización (Haga clic en el lote para ver sus características)', 'enclave-urbano'); ?></h2>
                         <?php if (eu_get_option('google_maps_api_key')) : ?>
                             <div class="eu-kml-map" data-kml="<?php echo esc_url($kml); ?>" data-lat="<?php echo esc_attr($lat); ?>" data-lng="<?php echo esc_attr($lng); ?>" data-zoom="<?php echo esc_attr($zoom); ?>"></div>
                         <?php else : ?>
@@ -137,6 +138,9 @@ get_header();
                             </div>
                         <?php endforeach; ?>
                     </dl>
+                    <?php if ($brochure) : ?>
+                        <a class="eu-button eu-button--outline-light" href="<?php echo esc_url($brochure); ?>" target="_blank" rel="noopener noreferrer" download><?php esc_html_e('Brochure', 'enclave-urbano'); ?></a>
+                    <?php endif; ?>
                     <?php if ($wa_link) : ?>
                         <a class="eu-button eu-button--accent" href="<?php echo esc_url($wa_link); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Consultar por WhatsApp', 'enclave-urbano'); ?></a>
                     <?php endif; ?>

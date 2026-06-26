@@ -28,7 +28,7 @@ get_header();
         <div class="eu-about-content">
 
             <?php
-            $about_page = get_page_by_title('Innovación y Sustentabilidad en el Desarrollo Urbano');
+            $about_page = get_post(get_option('page_on_front'));
             ?>
 
             <?php if($about_page): ?>

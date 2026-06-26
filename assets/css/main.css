@@ -211,6 +211,7 @@ strong { font-weight: 700; }
 
 /* Intro */
 .eu-section-intro { background: #fff; padding-block: 0; border-top: 2px solid var(--eu-green); }
+.eu-section-about { padding-top: 1.5rem; }
 .eu-intro-grid {
   min-height: 190px;
   display: grid;
@@ -221,8 +222,10 @@ strong { font-weight: 700; }
 }
 .eu-intro-logo { width: 150px; height: 150px; background: var(--eu-green); display: grid; place-items: center; }
 .eu-intro-logo__img { width: 86%; height: 86%; object-fit: contain; }
-.eu-intro-text { font-size: 1.1rem; line-height: 1.5; text-align: center; font-weight: 400; }
-.eu-intro-text p { margin: 0; }
+.eu-intro-text { font-size: 1rem; line-height: 1.58; text-align: center; font-weight: 400; }
+.eu-intro-text p,
+.eu-intro-text h2,
+.eu-intro-text h3 { font-size: 1rem; font-weight: 400; color: inherit; line-height: 1.58; margin: 0; }
 .eu-intro-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
 .eu-intro-card { min-height: 150px; padding: 1.1rem; color: #fff; border-radius: 0 0 24px 0; }
 .eu-intro-card h2 { color: #fff; font-size: 1.35rem; margin-bottom: 1.3rem; }
@@ -327,9 +330,11 @@ strong { font-weight: 700; }
 .eu-team-content > h2 { margin-bottom: 1.4rem; }
 .eu-team-cards-section h2 { margin-bottom: 1.4rem; }
 .eu-team-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem; }
-.eu-team-card { background: #666; min-height: 392px; display: grid; grid-template-rows: 1fr auto; overflow: hidden; }
-.eu-team-photo { min-height: 290px; background: #666; display: grid; place-items: center; color: #fff; }
-.eu-team-photo img { width: 100%; height: 100%; object-fit: cover; }
+.eu-team-card { background: #666; min-height: 392px; display: grid; grid-template-rows: 1fr auto; overflow: hidden; transition: transform .32s ease, box-shadow .32s ease; }
+.eu-team-card:hover { transform: translateY(-7px); box-shadow: 0 24px 56px rgba(0,0,0,.22), inset 0 -4px 0 var(--eu-yellow); }
+.eu-team-photo { min-height: 290px; background: #666; display: grid; place-items: center; color: #fff; overflow: hidden; }
+.eu-team-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.eu-team-card:hover .eu-team-photo img { transform: scale(1.06); }
 .eu-team-photo--placeholder span { width: 112px; height: 112px; color: #fff; opacity: .85; }
 .eu-team-meta {
   background: var(--eu-green);
@@ -510,6 +515,14 @@ strong { font-weight: 700; }
 .eu-project-card--featured .eu-project-card__image { aspect-ratio: unset; min-height: 340px; }
 .eu-project-card--featured .eu-project-card__body { display: flex; flex-direction: column; justify-content: center; padding: 2.5rem; }
 .eu-project-card--featured .eu-project-card__body h2 { font-size: 2.2rem; }
+.eu-inversiones-page .eu-project-card,
+.eu-inversiones-page .eu-project-card--featured { grid-column: auto !important; display: block !important; grid-template-columns: unset !important; }
+.eu-inversiones-page .eu-project-card .eu-project-card__image,
+.eu-inversiones-page .eu-project-card--featured .eu-project-card__image { aspect-ratio: 16/9 !important; min-height: unset !important; }
+.eu-inversiones-page .eu-project-card .eu-project-card__body,
+.eu-inversiones-page .eu-project-card--featured .eu-project-card__body { display: block !important; padding: 1.5rem !important; }
+.eu-inversiones-page .eu-project-card .eu-project-card__body h2,
+.eu-inversiones-page .eu-project-card--featured .eu-project-card__body h2 { font-size: 1.8rem !important; }
 .eu-project-card__facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; margin: 1rem 0; }
 .eu-project-card__facts div { border-top: 1px solid rgba(0,0,0,.08); padding-top: .5rem; }
 .eu-project-card__facts dt { color: var(--eu-green); font-size: .72rem; text-transform: uppercase; font-weight: 800; letter-spacing: .05em; }
@@ -527,7 +540,7 @@ strong { font-weight: 700; }
 .eu-project-hero__content { position: relative; padding-block: 4rem; }
 .eu-project-hero h1 { color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 6vw, 4rem); }
 .eu-project-hero .eu-kicker { color: #fff; }
-.eu-project-hero__logo { display: block; max-height: 70px; max-width: 200px; width: auto; object-fit: contain; }
+.eu-project-hero__logo { display: block; max-height: 140px; max-width: 400px; width: auto; object-fit: contain; }
 .eu-project-layout { display: grid; grid-template-columns: 1fr 290px; gap: 2.4rem; padding-block: 3rem; align-items: start; }
 .eu-project-maincol { display: grid; gap: 2rem; }
 .eu-project-block { background: #fff; }
@@ -629,6 +642,7 @@ strong { font-weight: 700; }
   .eu-project-grid,
   .eu-card-grid,
   .eu-sales-fallback { grid-template-columns: 1fr; }
+  .eu-inversiones-page .eu-project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .eu-project-card--featured { grid-template-columns: 1fr; }
   .eu-project-card--featured .eu-project-card__image { min-height: 220px; }
   .eu-intro-logo { width: 120px; height: 120px; }
@@ -779,11 +793,11 @@ strong { font-weight: 700; }
 }
 
 .eu-home-header .eu-brand-strip__inner {
-  --eu-strip-logo-w: clamp(430px, 40vw, 540px);
+  --eu-strip-logo-w: clamp(215px, 20vw, 270px);
   position: relative;
   min-height: 112px;
   display: grid;
-  grid-template-columns: var(--eu-strip-logo-w) 2px minmax(200px, 330px);
+  grid-template-columns: var(--eu-strip-logo-w) 2px minmax(250px, 330px);
   column-gap: clamp(1rem, 2vw, 1.65rem);
   align-items: center;
   justify-content: center;
@@ -800,8 +814,8 @@ strong { font-weight: 700; }
 
 .eu-home-header .eu-strip-logo__img {
   position: absolute;
-  left: clamp(20px, 3vw, 40px);
-  top: clamp(-190px, -13vw, -140px);
+  left: 0;
+  top: clamp(-64px, -4.5vw, -42px);
   width: 100%;
   max-width: none;
   height: auto;
@@ -835,9 +849,9 @@ strong { font-weight: 700; }
   }
 
   .eu-home-header .eu-brand-strip__inner {
-    --eu-strip-logo-w: clamp(240px, 50vw, 320px);
+    --eu-strip-logo-w: clamp(150px, 30vw, 180px);
     min-height: 102px;
-    grid-template-columns: var(--eu-strip-logo-w) 1px minmax(110px, 1fr);
+    grid-template-columns: var(--eu-strip-logo-w) 1px minmax(135px, 1fr);
     column-gap: .85rem;
   }
 
@@ -847,7 +861,7 @@ strong { font-weight: 700; }
   }
 
   .eu-home-header .eu-strip-logo__img {
-    top: -130px;
+    top: -34px;
   }
 
   .eu-home-header .eu-strip-divider {
@@ -876,13 +890,13 @@ strong { font-weight: 700; }
   }
 
   .eu-home-header .eu-strip-logo {
-    width: min(340px, 85vw);
+    width: min(190px, 70vw);
     height: 82px;
     justify-self: center;
   }
 
   .eu-home-header .eu-strip-logo__img {
-    top: -110px;
+    top: -36px;
   }
 
   .eu-home-header .eu-strip-divider {
