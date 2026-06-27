@@ -222,7 +222,7 @@ strong { font-weight: 700; }
 }
 .eu-intro-logo { width: 150px; height: 150px; background: var(--eu-green); display: grid; place-items: center; }
 .eu-intro-logo__img { width: 86%; height: 86%; object-fit: contain; }
-.eu-intro-text { font-size: 1rem; line-height: 1.58; text-align: center; font-weight: 400; }
+.eu-intro-text { font-size: 1rem; line-height: 1.58; font-weight: 400; }
 .eu-intro-text p,
 .eu-intro-text h2,
 .eu-intro-text h3 { font-size: 1rem; font-weight: 400; color: inherit; line-height: 1.58; margin: 0; }
@@ -590,6 +590,10 @@ strong { font-weight: 700; }
 .eu-footer-menu,
 .eu-social-links { list-style: none; padding: 0; margin: 0; display: grid; gap: .35rem; }
 .eu-footer-widgets { margin-top: 1.2rem; }
+.eu-footer-legal { border-top: 1px solid rgba(255,255,255,.18); padding: .9rem 0; }
+.eu-footer-legal p { font-size: .76rem; color: rgba(255,255,255,.65); margin: 0; text-align: center; }
+.eu-footer-legal a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.eu-footer-legal a:hover { color: #fff; }
 
 @media (max-width: 1120px) {
   .eu-intro-grid { grid-template-columns: 130px 1fr; }

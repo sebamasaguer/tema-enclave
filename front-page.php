@@ -14,7 +14,7 @@ get_header();
                 <?php echo eu_logo_img('small', 'eu-intro-logo__img'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             </div>
 
-            <div class="eu-intro-text">
+            <div class="eu-intro-text" style="text-align:<?php echo esc_attr(eu_get_option('home_mission_align', 'left')); ?>">
                 <?php echo wpautop(eu_kses_content(eu_get_option('home_mission'))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             </div>
 

@@ -39,6 +39,7 @@ function eu_default_options() {
         'youtube_url'         => '',
         'tiktok_url'          => '',
         'google_maps_api_key' => '',
+        'home_mission_align'  => 'left',
         'home_mission'        => "Tiene como misión principal:\nDISEÑAR, CREAR Y CONSTRUIR, cuidando la coherencia proyectual y su contexto ambiental\nTrabaja en mejorar la vida de las comunidades y aportar a la sustentabilidad de las ciudades.\nConcretar proyectos que cambien realidades y perduren en el tiempo.",
         'home_genera_title'   => 'Genera',
         'home_genera_text'    => 'Propuestas de inversión para la industria de la construcción y diferentes conceptos inmobiliarios.',

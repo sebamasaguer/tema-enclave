@@ -58,6 +58,7 @@ function eu_sanitize_theme_options($input) {
                 $number = absint($value);
                 $output[$key] = $number ? (string) $number : $default;
                 break;
+            case 'home_mission_align':
             case 'footer_citybar_position_x':
                 $allowed_x = array('left', 'center', 'right');
                 $output[$key] = in_array($value, $allowed_x, true) ? $value : $default;
@@ -143,7 +144,12 @@ function eu_render_theme_options_page() {
             <div class="eu-admin-card">
                 <h2><?php esc_html_e('Home: Enclave Urbano', 'enclave-urbano'); ?></h2>
                 <?php
-                eu_option_editor_field('home_mission', __('Texto misión', 'enclave-urbano'), $options['home_mission']);
+                eu_option_select_field('home_mission_align', __('Alineación del texto de portada', 'enclave-urbano'), $options['home_mission_align'], array(
+                    'left'   => __('Izquierda', 'enclave-urbano'),
+                    'center' => __('Centrado', 'enclave-urbano'),
+                    'right'  => __('Derecha', 'enclave-urbano'),
+                ));
+                eu_option_editor_field('home_mission', __('Texto de portada', 'enclave-urbano'), $options['home_mission']);
                 eu_option_text_field('home_genera_title', __('Título bloque Genera', 'enclave-urbano'), $options['home_genera_title']);
                 eu_option_editor_field('home_genera_text', __('Texto bloque Genera', 'enclave-urbano'), $options['home_genera_text']);
                 eu_option_text_field('home_alcance_title', __('Título bloque Alcance', 'enclave-urbano'), $options['home_alcance_title']);
