@@ -35,7 +35,7 @@
 
     <div class="eu-footer-legal">
         <div class="eu-container">
-            <p><a href="<?php echo esc_url(get_permalink(get_page_by_path('terminos-y-condiciones'))); ?>"><?php esc_html_e('Términos y Condiciones', 'enclave-urbano'); ?></a> / <a href="<?php echo esc_url(get_permalink(get_page_by_path('politicas-de-privacidad'))); ?>"><?php esc_html_e('Políticas de Privacidad', 'enclave-urbano'); ?></a> / <?php esc_html_e('Todos los derechos, imágenes y videos reservados.', 'enclave-urbano'); ?> Copyright &copy; <?php echo date('Y'); ?> ENCLAVEURBANO by Agencia de Diseño (<a href="https://www.instagram.com/mariadanielasaravia" target="_blank" rel="noopener noreferrer">@mariadanielasaravia</a>)</p>
+            <p><a href="<?php echo esc_url(get_permalink(get_page_by_path('terminos-y-condiciones'))); ?>"><?php esc_html_e('Términos y Condiciones', 'enclave-urbano'); ?></a> / <a href="<?php echo esc_url(get_permalink(get_page_by_path('politicas-de-privacidad'))); ?>"><?php esc_html_e('Políticas de Privacidad', 'enclave-urbano'); ?></a> / <?php esc_html_e('Todos los derechos, imágenes y videos reservados.', 'enclave-urbano'); ?> Copyright &copy; <?php echo date('Y'); ?> ENCLAVEURBANO by <a href="https://www.instagram.com/mariadanielasaravia" target="_blank" rel="noopener noreferrer">Agencia de Diseño</a></p>
         </div>
     </div>
 </footer>
