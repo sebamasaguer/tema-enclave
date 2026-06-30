@@ -183,11 +183,11 @@ function eu_seo_schema() {
             'url'           => get_permalink(),
             'datePublished' => get_the_date('c'),
             'dateModified'  => get_the_modified_date('c'),
-            'publisher'     => array(
+            'publisher'     => array_filter(array(
                 '@type' => 'Organization',
                 'name'  => get_bloginfo('name'),
-                'logo'  => eu_get_option('logo_large'),
-            ),
+                'logo'  => eu_get_option('logo_large') ?: null,
+            )),
         );
 
         if ($image['url']) {
