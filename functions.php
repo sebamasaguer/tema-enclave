@@ -20,6 +20,7 @@ require_once EU_THEME_DIR . '/inc/theme-options.php';
 require_once EU_THEME_DIR . '/inc/metaboxes.php';
 require_once EU_THEME_DIR . '/inc/contact-form.php';
 require_once EU_THEME_DIR . '/inc/template-tags.php';
+require_once EU_THEME_DIR . '/inc/seo.php';
 
 
 /**
