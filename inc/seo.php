@@ -99,6 +99,121 @@ function eu_seo_image_data() {
 }
 
 /**
+ * Genera el array Schema.org según el tipo de página.
+ * Devuelve null si no aplica ningún schema.
+ */
+function eu_seo_schema() {
+    if (is_front_page()) {
+        $same_as = array_values(array_filter(array(
+            eu_get_option('instagram_url'),
+            eu_get_option('facebook_url'),
+            eu_get_option('linkedin_url'),
+            eu_get_option('youtube_url'),
+            eu_get_option('tiktok_url'),
+        )));
+
+        $schema = array(
+            '@context' => 'https://schema.org',
+            '@type'    => array('Organization', 'RealEstateAgent'),
+            'name'     => get_bloginfo('name'),
+            'url'      => home_url('/'),
+        );
+
+        $tagline = eu_get_option('tagline');
+        if ($tagline) {
+            $schema['description'] = $tagline;
+        }
+
+        $logo = eu_get_option('logo_large');
+        if ($logo) {
+            $schema['logo'] = $logo;
+        }
+
+        $address = eu_get_option('address');
+        if ($address) {
+            $schema['address'] = wp_strip_all_tags($address);
+        }
+
+        $phone = eu_get_option('phone_admin');
+        if ($phone) {
+            $schema['telephone'] = $phone;
+        }
+
+        $email = eu_get_option('contact_email');
+        if ($email) {
+            $schema['email'] = $email;
+        }
+
+        if (!empty($same_as)) {
+            $schema['sameAs'] = $same_as;
+        }
+
+        return $schema;
+    }
+
+    if (is_singular('eu_project')) {
+        $image  = eu_seo_image_data();
+        $schema = array(
+            '@context'    => 'https://schema.org',
+            '@type'       => 'RealEstateListing',
+            'name'        => get_the_title(),
+            'description' => eu_seo_description(),
+            'url'         => get_permalink(),
+        );
+
+        if ($image['url']) {
+            $schema['image'] = $image['url'];
+        }
+
+        $location = eu_project_meta(get_the_ID(), 'location');
+        if ($location) {
+            $schema['address'] = $location;
+        }
+
+        return $schema;
+    }
+
+    if (is_singular('eu_news')) {
+        $image  = eu_seo_image_data();
+        $schema = array(
+            '@context'      => 'https://schema.org',
+            '@type'         => 'NewsArticle',
+            'headline'      => get_the_title(),
+            'description'   => eu_seo_description(),
+            'url'           => get_permalink(),
+            'datePublished' => get_the_date('c'),
+            'dateModified'  => get_the_modified_date('c'),
+            'publisher'     => array(
+                '@type' => 'Organization',
+                'name'  => get_bloginfo('name'),
+                'logo'  => eu_get_option('logo_large'),
+            ),
+        );
+
+        if ($image['url']) {
+            $schema['image'] = $image['url'];
+        }
+
+        return $schema;
+    }
+
+    // Páginas genéricas y archivos
+    $schema = array(
+        '@context' => 'https://schema.org',
+        '@type'    => 'WebPage',
+        'name'     => eu_seo_title(),
+        'url'      => eu_seo_url(),
+    );
+
+    $desc = eu_seo_description();
+    if ($desc) {
+        $schema['description'] = $desc;
+    }
+
+    return $schema;
+}
+
+/**
  * Inyecta meta tags SEO en <head>.
  */
 add_action('wp_head', 'eu_seo_head', 1);
@@ -141,4 +256,9 @@ function eu_seo_head() {
     <meta name="twitter:image" content="<?php echo esc_url($image['url']); ?>">
     <?php endif; ?>
     <?php
+    // JSON-LD Schema.org
+    $schema = eu_seo_schema();
+    if ($schema) {
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    }
 }
